@@ -1,0 +1,137 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<script type="text/javascript">
+    function addTextArea(c_num) {
+        var changeBtn = document.getElementById("changeButton"+c_num);
+        var comm = document.getElementById("comment"+c_num);
+        var btnSave = document.getElementById("btnSave"+c_num);
+        var comDiv = document.getElementById("comDiv"+c_num);
+
+        changeBtn.style.display = "none";
+        comm.style.display = "none";
+        btnSave.style.display="inline";
+
+        var hidField = document.createElement("textarea");
+        hidField.setAttribute("name", "updateCo");
+        hidField.setAttribute("id","updateCo");
+        comDiv.appendChild(hidField);
+
+
+    }
+    function p_update(){
+        var form = document.createElement("form");
+        form.setAttribute("method","post");
+        form.setAttribute("action","/post/:id/update");
+
+        var input = document.createElement("input");
+        input.setAttribute("type","text");
+        input.setAttribute("name","pid");
+        input.setAttribute("value","<%=post._id%>");
+        form.appendChild(input);
+
+        document.body.appendChild(form);
+        form.submit();
+    }
+    function p_del(){
+        var form = document.createElement("form");
+        form.setAttribute("method","post");
+        form.setAttribute("action","/post/:id/delete");
+
+        var input = document.createElement("input");
+        input.setAttribute("type","text");
+        input.setAttribute("name","pid");
+        input.setAttribute("value","<%=post._id%>");
+        form.appendChild(input);
+
+        document.body.appendChild(form);
+        form.submit();
+    }
+
+    function c_update(cid){
+        var form = document.createElement("form");
+        form.setAttribute("method","post");
+        form.setAttribute("action","/comment/update");
+
+        var input1 = document.createElement("input");
+        input1.setAttribute("type","text");
+        input1.setAttribute("name","pid");
+        input1.setAttribute("value","<%=post._id%>");
+        form.appendChild(input1);
+
+        var input2 = document.createElement("input");
+        input2.setAttribute("type","text");
+        input2.setAttribute("name","cid");
+        input2.setAttribute("value",cid);
+        form.appendChild(input2);
+
+        var updateCo = document.getElementById("updateCo");
+
+        var input3 = document.createElement("input");
+        input3.setAttribute("type","hidden");
+        input3.setAttribute("name","contents");
+        input3.setAttribute("value",updateCo.value);
+        console.log(updateCo.value);
+        form.appendChild(input3);
+
+        document.body.appendChild(form);
+        form.submit();
+    }
+    function c_del(cid){
+        var form = document.createElement("form");
+        form.setAttribute("method","post");
+        form.setAttribute("action","/comment/delete");
+
+        var input1 = document.createElement("input");
+        input1.setAttribute("type","text");
+        input1.setAttribute("name","pid");
+        input1.setAttribute("value","<%=post._id%>");
+        form.appendChild(input1);
+
+        var input2 = document.createElement("input");
+        input2.setAttribute("type","text");
+        input2.setAttribute("name","cid");
+        input2.setAttribute("value",cid);
+        form.appendChild(input2);
+
+        document.body.appendChild(form);
+        form.submit();
+    }
+
+
+</script>
+<body>
+<h3>제목 : <%=post.title%> </h3>
+<h3>작성자 : <%=post.author.uid%> </h3>
+<h3>내용 : <%=post.contents%> </h3>
+<button><a href="/loginIndex">목록</a></button>
+<% if(lid == post.author.uid){%>
+    <button onclick="p_update()">수정</button><button onclick="p_del()">삭제</button>
+<% } %>
+<hr>
+
+<% if (post.comments !== null) {
+    var comments = post.comments;
+for(i = 0; i < post.comments.length; i++) {%>
+<h4>작성자 : <%=comments[i].author.uid%></h4>
+<h4 id="comDiv<%=i%>">댓글 : <span id="comment<%=i%>"><%=comments[i].contents%></span></h4>
+<%  if(lid == comments[i].author.uid){%>
+    <button id="changeButton<%=i%>" onclick="addTextArea(<%=i%>)">수정</button>
+    <button id="btnSave<%=i%>" onclick="c_update('<%=comments[i]._id%>')" style="display: none">저장</button>
+    <button onclick="c_del('<%=comments[i]._id%>')">삭제</button>
+<% } %>
+<hr>
+<%} }%>
+<form action="/comment" method="post">
+    <input type="text" name="id" value="<%=post._id%>" hidden>
+    댓글 : <textarea name="contents"></textarea><br>
+    <input type="submit" value="확인">
+</form>
+</body>
+</html>
+</form>
+</body>
+</html>

@@ -1,0 +1,14 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="/p_updateOk" method="post">
+    제목 : <input type="text" name="title"><br>
+    게시글 : <textarea name="contents"></textarea><br>
+    <input type="hidden" value="<%=pid%>" name="pid">
+    <input type="submit" value="update">
+</form>
+</body>
+</html>

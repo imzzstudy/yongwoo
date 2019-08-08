@@ -1,0 +1,26 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<%=id%>님 <button><a href="/logout">로그아웃</a></button><br>
+<a href = "/write">새 글 쓰기</a>
+<table>
+    <tr>
+        <td>제목</td>
+        <td>글쓴이</td>
+    </tr>
+<% if(post==null) {
+    %>게시물이 없습니다.<%
+    }else{
+    for(var i = 0; i<post.length; i++){%>
+
+    <tr>
+        <td><a href="/post/<%=post[i]._id%>"><%=post[i].title%></a></td>
+        <td><%=post[i].author.uid%></td>
+    </tr><br>
+<%}}%>
+</table>
+</body>
+</html>

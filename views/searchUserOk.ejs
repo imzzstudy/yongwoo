@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script>
+    function update(){
+        var form = document.createElement("form");
+        form.setAttribute("method","post");
+        form.setAttribute("action","/update");
+
+        var input = document.createElement("input");
+        input.setAttribute("type","text");
+        input.setAttribute("name","rid");
+        input.setAttribute("value","<%=rid%>");
+        form.appendChild(input);
+
+        document.body.appendChild(form);
+        form.submit();
+    }
+    function del(){
+        var form = document.createElement("form");
+        form.setAttribute("method","post");
+        form.setAttribute("action","/delete");
+
+        var input = document.createElement("input");
+        input.setAttribute("type","text");
+        input.setAttribute("name","rid");
+        input.setAttribute("value","<%=rid%>");
+        form.appendChild(input);
+
+        document.body.appendChild(form);
+        form.submit();
+    }
+</script>
+<body>
+    아이디   : <%=rid%><br>
+    비밀번호 : <%=rpwd%><br>
+    <button name="Modify" onClick="update()">수정</button>
+    <button name="delete" onClick="del()">회원탈퇴</button>
+
+</body>
+</html>
